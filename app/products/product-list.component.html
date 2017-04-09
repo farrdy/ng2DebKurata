@@ -1,0 +1,55 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        {{pageTitle}}
+    </div>
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-lg-2'>Filter by :</div>
+            <div class='col-lg-4'>
+                <input type='text' [(ngModel)]='listFilter' />
+            </div>
+        </div>
+        <div class='Row'>
+            <div class='col-lg-6'>
+                <h3>Filtered by:{{listFilter}}</h3>
+            </div>
+        </div>
+       
+            <div class='table-responsive'>
+                <table class='table' *ngIf='products && products.length'>
+                    <thead>
+                        <tr>
+                            <th>
+                                <button class='btn btn-primary' (click)='toggleImage()'>
+                                {{ showImage ?'Hide': 'Show'}} Image
+                             </button>
+                            </th>
+                            <th>Product</th>
+                            <th>Code</th>
+                            <th>Available</th>
+                            <th>Price</th>
+                            <th>5 star Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let prd of products | productFilter:listFilter'>
+                            <td>
+                                <img *ngIf='showImage' [src]='prd.imageUrl' [title]='prd.productName' [style.width.px]='imageWidth' [style.margin.px]='imageMargin'>
+                            </td>
+                            <td>{{ prd.productName }}</td>
+                            <td>{{ prd.productCode | lowercase }}</td>
+                            <td>{{ prd.releaseDate }}</td>
+                            <td>{{ prd.price| currency | uppercase}}</td>
+                            <td>
+                                <ai-star [rating]='prd.starRating' (ratingClicked)='onRatingClicked($event)'></ai-star>
+                            </td>
+                            <!--<td>{{ prd.starRating }}</td>-->
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            
+        </div>
+    </div>
+</div>
